@@ -20,14 +20,18 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "USERS")
+@Table(name = "USERS", indexes = {
+        @Index(name = "USERS_index", unique = true, columnList = "email")
+})
 public class User implements UserDetails{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
     private String password;
