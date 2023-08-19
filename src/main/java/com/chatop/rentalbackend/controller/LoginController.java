@@ -1,6 +1,6 @@
 package com.chatop.rentalbackend.controller;
 
-import jakarta.annotation.security.RolesAllowed;
+import com.chatop.rentalbackend.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

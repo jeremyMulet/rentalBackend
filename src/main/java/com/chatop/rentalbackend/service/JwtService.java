@@ -1,4 +1,4 @@
-package com.chatop.rentalbackend.configuration;
+package com.chatop.rentalbackend.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

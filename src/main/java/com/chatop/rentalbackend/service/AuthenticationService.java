@@ -1,6 +1,9 @@
-package com.chatop.rentalbackend.controller;
+package com.chatop.rentalbackend.service;
 
-import com.chatop.rentalbackend.configuration.JwtService;
+import com.chatop.rentalbackend.controller.AuthenticationRequest;
+import com.chatop.rentalbackend.controller.AuthenticationResponse;
+import com.chatop.rentalbackend.controller.RegisterRequest;
+import com.chatop.rentalbackend.service.JwtService;
 import com.chatop.rentalbackend.model.User;
 import com.chatop.rentalbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,5 +1,6 @@
 package com.chatop.rentalbackend.configuration;
 
+import com.chatop.rentalbackend.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
