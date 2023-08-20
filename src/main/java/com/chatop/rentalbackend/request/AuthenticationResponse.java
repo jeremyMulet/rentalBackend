@@ -1,4 +1,4 @@
-package com.chatop.rentalbackend.controller;
+package com.chatop.rentalbackend.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
