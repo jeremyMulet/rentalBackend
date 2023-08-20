@@ -1,11 +1,12 @@
 package com.chatop.rentalbackend.request;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 /**
  * Created by Jérémy MULET on 20/08/2023.
@@ -14,15 +15,15 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponse {
-
-    private Long id;
+public class RentalRequest {
 
     private String name;
 
-    private String email;
+    private BigDecimal surface;
 
-    private LocalDateTime created_at;
+    private BigDecimal price;
 
-    private LocalDateTime updated_at;
+    private String picture;
+
+    private String description;
 }

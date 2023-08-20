@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 /**
  * Created by Jérémy MULET on 20/08/2023.
@@ -14,15 +14,15 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponse {
-
-    private Long id;
+public class FormDataRental {
 
     private String name;
 
-    private String email;
+    private String surface;
 
-    private LocalDateTime created_at;
+    private String price;
 
-    private LocalDateTime updated_at;
+    private String picture;
+
+    private String description;
 }

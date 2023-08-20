@@ -1,10 +1,13 @@
 package com.chatop.rentalbackend.controller;
 
 import com.chatop.rentalbackend.model.Rental;
+import com.chatop.rentalbackend.request.FormDataRental;
+import com.chatop.rentalbackend.request.RentalRequest;
 import com.chatop.rentalbackend.service.RentalService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,8 +33,13 @@ public class RentalController {
     }
 
     @PostMapping
-    public Rental createRental(@RequestBody Rental rental) {
-        return rentalService.saveRental(rental);
+    public ResponseEntity<String> createRental(HttpServletRequest request, FormDataRental formData) {
+        if(rentalService.createRental(request, formData)) {
+            return ResponseEntity.ok("Rental created!");
+        } else {
+            return ResponseEntity.ok("Cannot create rental...");
+        }
+
     }
 
     @PatchMapping("/{id}")
