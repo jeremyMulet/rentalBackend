@@ -1,11 +1,12 @@
 package com.chatop.rentalbackend.service;
 
-import com.chatop.rentalbackend.controller.AuthenticationRequest;
-import com.chatop.rentalbackend.controller.AuthenticationResponse;
-import com.chatop.rentalbackend.controller.RegisterRequest;
-import com.chatop.rentalbackend.service.JwtService;
+import com.chatop.rentalbackend.request.AuthenticationRequest;
+import com.chatop.rentalbackend.request.AuthenticationResponse;
+import com.chatop.rentalbackend.request.RegisterRequest;
 import com.chatop.rentalbackend.model.User;
 import com.chatop.rentalbackend.repository.UserRepository;
+import com.chatop.rentalbackend.request.UserResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * Created by Jérémy MULET on 16/08/2023.
@@ -54,5 +56,22 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+    }
+
+    public UserResponse currentUser(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+            var user =  userRepository.findByEmail(jwtService.extractUsername(token))
+                    .orElseThrow();
+            return UserResponse.builder()
+                    .id(user.getId())
+                    .name(user.getName())
+                    .email(user.getEmail())
+                    .created_at(user.getCreatedAt())
+                    .updated_at(user.getUpdatedAt())
+                    .build();
+        }
+        return null;
     }
 }
