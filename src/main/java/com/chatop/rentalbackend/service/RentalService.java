@@ -46,9 +46,7 @@ public class RentalService {
     }
 
     public Optional<Rental> getRentalById(Long id) {
-        var rental = rentalRepository.findById(id);
-        System.out.println(rental);
-        return rental;
+        return rentalRepository.findById(id);
     }
 
     public void saveRental(Rental rental) {
