@@ -18,9 +18,9 @@ public class FormDataRental {
 
     private String name;
 
-    private String surface;
+    private BigDecimal surface;
 
-    private String price;
+    private BigDecimal price;
 
     private String picture;
 

@@ -1,6 +1,5 @@
 package com.chatop.rentalbackend.controller;
 
-import com.chatop.rentalbackend.model.User;
 import com.chatop.rentalbackend.request.AuthenticationRequest;
 import com.chatop.rentalbackend.request.AuthenticationResponse;
 import com.chatop.rentalbackend.request.RegisterRequest;
@@ -36,7 +35,7 @@ public class LoginController {
     @GetMapping("/me")
     public ResponseEntity<Optional<UserResponse>> me(HttpServletRequest request) {
         return ResponseEntity.ok(Optional.ofNullable(authService.currentUser(request)));
-    };
+    }
 
 
 }

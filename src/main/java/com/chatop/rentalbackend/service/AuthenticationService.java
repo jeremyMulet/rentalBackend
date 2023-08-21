@@ -1,10 +1,10 @@
 package com.chatop.rentalbackend.service;
 
+import com.chatop.rentalbackend.model.User;
+import com.chatop.rentalbackend.repository.UserRepository;
 import com.chatop.rentalbackend.request.AuthenticationRequest;
 import com.chatop.rentalbackend.request.AuthenticationResponse;
 import com.chatop.rentalbackend.request.RegisterRequest;
-import com.chatop.rentalbackend.model.User;
-import com.chatop.rentalbackend.repository.UserRepository;
 import com.chatop.rentalbackend.request.UserResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 /**
  * Created by Jérémy MULET on 16/08/2023.
@@ -62,7 +61,7 @@ public class AuthenticationService {
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7);
-            var user =  userRepository.findByEmail(jwtService.extractUsername(token))
+            var user = userRepository.findByEmail(jwtService.extractUsername(token))
                     .orElseThrow();
             return UserResponse.builder()
                     .id(user.getId())

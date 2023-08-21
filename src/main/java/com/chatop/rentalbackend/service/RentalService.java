@@ -5,18 +5,13 @@ import com.chatop.rentalbackend.repository.RentalRepository;
 import com.chatop.rentalbackend.repository.UserRepository;
 import com.chatop.rentalbackend.request.FormDataRental;
 import com.chatop.rentalbackend.request.RentalResponse;
-import com.chatop.rentalbackend.request.UserResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -56,20 +51,19 @@ public class RentalService {
         return rental;
     }
 
-    public Rental saveRental(Rental rental) {
-        return rentalRepository.save(rental);
+    public void saveRental(Rental rental) {
+        rentalRepository.save(rental);
     }
 
     public Boolean createRental(HttpServletRequest request, FormDataRental formData) {
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7);
-            var user =  userRepository.findByEmail(jwtService.extractUsername(token))
-                    .orElseThrow();
+            var user = userRepository.findByEmail(jwtService.extractUsername(token)).orElseThrow();
             var rental = Rental.builder()
                     .name(formData.getName())
-                    .surface(new BigDecimal(formData.getSurface()) )
-                    .price(new BigDecimal(formData.getPrice()))
+                    .surface(formData.getSurface())
+                    .price(formData.getPrice())
                     .picture(formData.getPicture())
                     .owner(user)
                     .description(formData.getDescription())
@@ -82,9 +76,5 @@ public class RentalService {
         return false;
 
     }
-
-//    public void deleteRental(Long id) {
-//        rentalRepository.deleteById(id);
-//    }
 
 }

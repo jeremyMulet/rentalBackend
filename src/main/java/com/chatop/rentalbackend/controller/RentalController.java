@@ -55,7 +55,7 @@ public class RentalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateRental(@PathVariable Long id, RentalRequest updatedRental) {
+    public ResponseEntity<String> updateRental(@PathVariable Long id, FormDataRental updatedRental) {
         return rentalService.getRentalById(id)
                 .map(rental -> {
                     if (updatedRental.getName() != null) {
