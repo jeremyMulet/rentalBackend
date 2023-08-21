@@ -23,7 +23,5 @@ public class RentalRequest {
 
     private BigDecimal price;
 
-    private String picture;
-
     private String description;
 }

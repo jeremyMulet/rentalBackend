@@ -18,9 +18,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "RENTALS", indexes = {
+@Table(name = "RENTALS"/*, indexes = {
         @Index(name = "idx_owner_id", unique = true, columnList = "owner_id")
-})
+}*/)
 public class Rental {
 
     @Id

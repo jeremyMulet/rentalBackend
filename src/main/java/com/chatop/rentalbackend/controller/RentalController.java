@@ -2,6 +2,7 @@ package com.chatop.rentalbackend.controller;
 
 import com.chatop.rentalbackend.model.Rental;
 import com.chatop.rentalbackend.request.FormDataRental;
+import com.chatop.rentalbackend.request.RentalRequest;
 import com.chatop.rentalbackend.request.RentalResponse;
 import com.chatop.rentalbackend.service.RentalService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,8 +23,8 @@ public class RentalController {
     private final RentalService rentalService;
 
     @GetMapping
-    public List<Rental> getAllRentals() {
-        return rentalService.getAllRentals();
+    public ResponseEntity<List<RentalResponse>> getAllRentals() {
+        return ResponseEntity.ok(rentalService.getAllRentals());
     }
 
     @GetMapping("/{id}")
@@ -53,8 +54,8 @@ public class RentalController {
 
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<String> updateRental(@PathVariable Long id, @RequestBody Rental updatedRental) {
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateRental(@PathVariable Long id, RentalRequest updatedRental) {
         return rentalService.getRentalById(id)
                 .map(rental -> {
                     if (updatedRental.getName() != null) {
@@ -69,9 +70,8 @@ public class RentalController {
                     if (updatedRental.getDescription() != null) {
                         rental.setDescription(updatedRental.getDescription());
                     }
-
-                    Rental savedRental = rentalService.saveRental(rental);
-                    return ResponseEntity.ok("Rental Updated!"); // renvoie le rental mis à jour avec un statut 200 OK
+                    rentalService.saveRental(rental);
+                    return ResponseEntity.ok("Rental Updated!");
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build()); // renvoie un statut 404 Not Found si le rental n'est pas trouvé
     }

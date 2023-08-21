@@ -14,6 +14,7 @@ import org.springframework.util.MultiValueMap;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -29,8 +30,24 @@ public class RentalService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
-    public List<Rental> getAllRentals() {
-        return rentalRepository.findAll();
+    public List<RentalResponse> getAllRentals() {
+        var rentals = rentalRepository.findAll();
+        List<RentalResponse> response = new ArrayList<>();
+        rentals.forEach(rental -> {
+            RentalResponse rentalResponse = RentalResponse.builder()
+                    .id(rental.getId())
+                    .name(rental.getName())
+                    .surface(rental.getSurface())
+                    .price(rental.getPrice())
+                    .picture(rental.getPicture())
+                    .description(rental.getDescription())
+                    .owner_id(rental.getOwner().getId())
+                    .created_at(rental.getCreatedAt())
+                    .updated_at(rental.getUpdatedAt())
+                    .build();
+            response.add(rentalResponse);
+        });
+        return response;
     }
 
     public Optional<Rental> getRentalById(Long id) {
@@ -38,13 +55,6 @@ public class RentalService {
         System.out.println(rental);
         return rental;
     }
-
-//    public RentalResponse getRentalById(Long id) {
-//        var rental = rentalRepository.findById(id);
-//        RentalResponse response = RentalResponse.builder().build();
-//        System.out.println(rental);
-//        return response;
-//    }
 
     public Rental saveRental(Rental rental) {
         return rentalRepository.save(rental);
@@ -73,8 +83,8 @@ public class RentalService {
 
     }
 
-    public void deleteRental(Long id) {
-        rentalRepository.deleteById(id);
-    }
+//    public void deleteRental(Long id) {
+//        rentalRepository.deleteById(id);
+//    }
 
 }
