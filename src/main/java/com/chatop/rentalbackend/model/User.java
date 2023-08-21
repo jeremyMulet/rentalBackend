@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by Jérémy MULET on 16/08/2023.
@@ -24,17 +24,19 @@ import java.util.Date;
 @Table(name = "USERS", indexes = {
         @Index(name = "USERS_index", unique = true, columnList = "email")
 })
-public class User implements UserDetails{
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
+    @Column(nullable = false, length = 255)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 255)
     private String email;
 
+    @Column(nullable = false, length = 255)
     private String password;
 
     @Column(name = "created_at")
@@ -42,6 +44,12 @@ public class User implements UserDetails{
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "owner")
+    private Set<Rental> rentals;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Message> messages;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

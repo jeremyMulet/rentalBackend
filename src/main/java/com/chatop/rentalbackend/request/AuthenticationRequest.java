@@ -1,4 +1,4 @@
-package com.chatop.rentalbackend.controller;
+package com.chatop.rentalbackend.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,11 +8,13 @@ import lombok.NoArgsConstructor;
 /**
  * Created by Jérémy MULET on 16/08/2023.
  */
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
+public class AuthenticationRequest {
 
-    private String token;
+    String password;
+    private String login;
 }
