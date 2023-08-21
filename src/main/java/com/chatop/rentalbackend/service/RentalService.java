@@ -4,6 +4,7 @@ import com.chatop.rentalbackend.model.Rental;
 import com.chatop.rentalbackend.repository.RentalRepository;
 import com.chatop.rentalbackend.repository.UserRepository;
 import com.chatop.rentalbackend.request.FormDataRental;
+import com.chatop.rentalbackend.request.RentalResponse;
 import com.chatop.rentalbackend.request.UserResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +34,17 @@ public class RentalService {
     }
 
     public Optional<Rental> getRentalById(Long id) {
-        return rentalRepository.findById(id);
+        var rental = rentalRepository.findById(id);
+        System.out.println(rental);
+        return rental;
     }
+
+//    public RentalResponse getRentalById(Long id) {
+//        var rental = rentalRepository.findById(id);
+//        RentalResponse response = RentalResponse.builder().build();
+//        System.out.println(rental);
+//        return response;
+//    }
 
     public Rental saveRental(Rental rental) {
         return rentalRepository.save(rental);

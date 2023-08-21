@@ -2,12 +2,11 @@ package com.chatop.rentalbackend.controller;
 
 import com.chatop.rentalbackend.model.Rental;
 import com.chatop.rentalbackend.request.FormDataRental;
-import com.chatop.rentalbackend.request.RentalRequest;
+import com.chatop.rentalbackend.request.RentalResponse;
 import com.chatop.rentalbackend.service.RentalService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +27,20 @@ public class RentalController {
     }
 
     @GetMapping("/{id}")
-    public Rental getRental(@PathVariable Long id) {
-        return rentalService.getRentalById(id).orElse(null);
+    public ResponseEntity<RentalResponse> getRental(@PathVariable Long id) {
+        Rental rental = rentalService.getRentalById(id).orElseThrow();
+        RentalResponse response = RentalResponse.builder()
+                .id(rental.getId())
+                .name(rental.getName())
+                .surface(rental.getSurface())
+                .price(rental.getPrice())
+                .picture(rental.getPicture())
+                .description(rental.getDescription())
+                .owner_id(rental.getOwner().getId())
+                .created_at(rental.getCreatedAt())
+                .updated_at(rental.getUpdatedAt())
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
