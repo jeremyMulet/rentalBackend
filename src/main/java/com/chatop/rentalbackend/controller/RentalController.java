@@ -2,7 +2,6 @@ package com.chatop.rentalbackend.controller;
 
 import com.chatop.rentalbackend.model.Rental;
 import com.chatop.rentalbackend.request.FormDataRental;
-import com.chatop.rentalbackend.request.RentalRequest;
 import com.chatop.rentalbackend.request.RentalResponse;
 import com.chatop.rentalbackend.service.RentalService;
 import jakarta.servlet.http.HttpServletRequest;
