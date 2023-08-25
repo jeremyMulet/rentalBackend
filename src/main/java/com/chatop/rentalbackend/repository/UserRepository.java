@@ -6,7 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 /**
- * Created by Jérémy MULET on 16/08/2023.
+ * Repository interface for accessing and manipulating User entities in the database.
+ * <p>
+ * @author Jérémy MULET
+ * @since 16/08/2023
  */
 public interface UserRepository extends JpaRepository<User, Integer> {
 

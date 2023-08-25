@@ -9,7 +9,11 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * Created by Jérémy MULET on 19/08/2023.
+ * Represents a Message entity in the system.
+ * Each message is associated with a specific Rental and a User.
+ * <p>
+ * @author Jérémy MULET
+ * @since 19/08/2023
  */
 @Data
 @Builder
@@ -26,10 +30,12 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // The rental to which this message is associated
     @ManyToOne
     @JoinColumn(name = "rental_id", nullable = false)
     private Rental rental;
 
+    // The user who sent this message
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

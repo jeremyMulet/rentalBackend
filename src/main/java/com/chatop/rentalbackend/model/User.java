@@ -13,7 +13,11 @@ import java.util.Collection;
 import java.util.Set;
 
 /**
- * Created by Jérémy MULET on 16/08/2023.
+ * Represents a User entity in the system.
+ * This entity is also used for authentication and authorization purposes with Spring Security.
+ * <p>
+ * @author Jérémy MULET
+ * @since 16/08/2023
  */
 
 @Data

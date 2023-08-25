@@ -11,7 +11,11 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
- * Created by Jérémy MULET on 19/08/2023.
+ * Represents a Rental entity in the system. Each rental is associated with a User (owner)
+ * and can have multiple associated messages.
+ * <p>
+ * @author Jérémy MULET
+ * @since 19/08/2023
  */
 @Data
 @Builder
