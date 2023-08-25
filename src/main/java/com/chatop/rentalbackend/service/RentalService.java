@@ -20,7 +20,10 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 /**
- * Created by Jérémy MULET on 19/08/2023.
+ * Service for handling CRUD operations related to rentals.
+ * <p>
+ * @author Jérémy MULET
+ * @since 19/08/2023
  */
 @Service
 @RequiredArgsConstructor
@@ -32,6 +35,11 @@ public class RentalService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
+    /**
+     * Fetch all rentals.
+     *
+     * @return A response containing all rentals.
+     */
     public RentalsResponse getAllRentals() {
         var rentals = rentalRepository.findAll();
         ArrayList<RentalResponse> response = new ArrayList<>();
@@ -62,6 +70,13 @@ public class RentalService {
         rentalRepository.save(rental);
     }
 
+    /**
+     * Create a new rental.
+     *
+     * @param request  the HTTP request to extract JWT token.
+     * @param formData the form data containing rental details.
+     * @return true if rental is successfully created, false otherwise.
+     */
     public Boolean createRental(HttpServletRequest request, FormDataRental formData) {
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
@@ -84,6 +99,12 @@ public class RentalService {
         return false;
     }
 
+    /**
+     * Store an image and return its path.
+     *
+     * @param imageFile the image to be stored.
+     * @return the path where the image is stored.
+     */
     private String storeImage(MultipartFile imageFile) {
         try {
             Path root = Paths.get(UPLOAD_DIR);

@@ -17,7 +17,16 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 /**
- * Created by Jérémy MULET on 16/08/2023.
+ * Service class responsible for handling user registration, authentication, and
+ * retrieving details of the currently authenticated user.
+ *
+ * <p>
+ * This service provides methods to register new users, authenticate users, and
+ * get details about the user currently logged in.
+ * </p>
+ *
+ * @author Jérémy MULET
+ * @since 16/08/2023
  */
 
 @Service
@@ -58,6 +67,12 @@ public class AuthenticationService {
                 .build();
     }
 
+    /**
+     * Retrieves details about the currently authenticated user.
+     *
+     * @param request the current HTTP request.
+     * @return the user response containing details about the current user or null if not authenticated.
+     */
     public UserResponse currentUser(HttpServletRequest request) {
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {

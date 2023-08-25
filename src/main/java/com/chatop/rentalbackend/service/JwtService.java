@@ -15,7 +15,13 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * Created by Jérémy MULET on 16/08/2023.
+ * Service for JWT token generation and validation.
+ *  *
+ *  * <p>This service provides methods to handle JWT (JSON Web Token) for the application.
+ *  * It allows the generation of tokens, extraction of information from tokens and validation of tokens.</p>
+ *
+ * @author Jérémy MULET
+ * @since 16/08/2023
  */
 @Component
 public class JwtService {
@@ -26,6 +32,14 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+    /**
+     * Extracts a claim from the given token.
+     *
+     * @param <T> the type of the claim value.
+     * @param token the JWT token.
+     * @param claimsResolver function to extract the claim.
+     * @return the extracted claim value.
+     */
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
@@ -35,6 +49,13 @@ public class JwtService {
         return generateToken(new HashMap<>(), userDetails);
     }
 
+    /**
+     * Generates a JWT token with additional claims for the given user details.
+     *
+     * @param extaClaims additional claims to be included in the token.
+     * @param userDetails the user details.
+     * @return a JWT token.
+     */
     public String generateToken(Map<String, Object> extaClaims, UserDetails userDetails) {
         return Jwts
                 .builder()
