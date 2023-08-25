@@ -3,13 +3,14 @@ package com.chatop.rentalbackend.controller;
 import com.chatop.rentalbackend.model.Rental;
 import com.chatop.rentalbackend.request.FormDataRental;
 import com.chatop.rentalbackend.request.RentalResponse;
+import com.chatop.rentalbackend.request.RentalsResponse;
 import com.chatop.rentalbackend.service.RentalService;
+import com.chatop.rentalbackend.utils.DateUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * Created by Jérémy MULET on 19/08/2023.
@@ -22,7 +23,7 @@ public class RentalController {
     private final RentalService rentalService;
 
     @GetMapping
-    public ResponseEntity<List<RentalResponse>> getAllRentals() {
+    public ResponseEntity<RentalsResponse> getAllRentals() {
         return ResponseEntity.ok(rentalService.getAllRentals());
     }
 
@@ -37,8 +38,8 @@ public class RentalController {
                 .picture(rental.getPicture())
                 .description(rental.getDescription())
                 .owner_id(rental.getOwner().getId())
-                .created_at(rental.getCreatedAt())
-                .updated_at(rental.getUpdatedAt())
+                .created_at(DateUtils.format(rental.getCreatedAt()))
+                .updated_at(DateUtils.format(rental.getUpdatedAt()))
                 .build();
         return ResponseEntity.ok(response);
     }

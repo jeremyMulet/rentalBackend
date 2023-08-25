@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 
@@ -22,7 +23,7 @@ public class FormDataRental {
 
     private BigDecimal price;
 
-    private String picture;
+    private MultipartFile picture;
 
     private String description;
 }

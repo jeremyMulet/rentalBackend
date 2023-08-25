@@ -6,6 +6,7 @@ import com.chatop.rentalbackend.request.AuthenticationRequest;
 import com.chatop.rentalbackend.request.AuthenticationResponse;
 import com.chatop.rentalbackend.request.RegisterRequest;
 import com.chatop.rentalbackend.request.UserResponse;
+import com.chatop.rentalbackend.utils.DateUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,10 +47,10 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getLogin(), request.getPassword()
+                        request.getEmail(), request.getPassword()
                 )
         );
-        var user = userRepository.findByEmail(request.getLogin())
+        var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
@@ -67,8 +68,8 @@ public class AuthenticationService {
                     .id(user.getId())
                     .name(user.getName())
                     .email(user.getEmail())
-                    .created_at(user.getCreatedAt())
-                    .updated_at(user.getUpdatedAt())
+                    .created_at(DateUtils.format(user.getCreatedAt()))
+                    .updated_at(DateUtils.format(user.getUpdatedAt()))
                     .build();
         }
         return null;

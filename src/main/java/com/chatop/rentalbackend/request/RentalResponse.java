@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
  * Created by Jérémy MULET on 21/08/2023.
@@ -31,7 +30,7 @@ public class RentalResponse {
 
     private Long owner_id;
 
-    private LocalDateTime created_at;
+    private String created_at;
 
-    private LocalDateTime updated_at;
+    private String updated_at;
 }

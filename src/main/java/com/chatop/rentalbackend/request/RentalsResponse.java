@@ -5,16 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Created by Jérémy MULET on 16/08/2023.
- */
+import java.util.ArrayList;
 
+
+/**
+ * Created by Jérémy MULET on 25/08/2023.
+ */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
-
-    String password;
-    private String email;
+public class RentalsResponse {
+    private ArrayList<RentalResponse> rentals;
 }

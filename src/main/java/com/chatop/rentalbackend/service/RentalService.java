@@ -5,13 +5,18 @@ import com.chatop.rentalbackend.repository.RentalRepository;
 import com.chatop.rentalbackend.repository.UserRepository;
 import com.chatop.rentalbackend.request.FormDataRental;
 import com.chatop.rentalbackend.request.RentalResponse;
+import com.chatop.rentalbackend.request.RentalsResponse;
+import com.chatop.rentalbackend.utils.DateUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -21,13 +26,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RentalService {
 
+    private static final String UPLOAD_DIR = "src/main/resources/pictures/";
+
     private final RentalRepository rentalRepository;
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
-    public List<RentalResponse> getAllRentals() {
+    public RentalsResponse getAllRentals() {
         var rentals = rentalRepository.findAll();
-        List<RentalResponse> response = new ArrayList<>();
+        ArrayList<RentalResponse> response = new ArrayList<>();
         rentals.forEach(rental -> {
             RentalResponse rentalResponse = RentalResponse.builder()
                     .id(rental.getId())
@@ -37,12 +44,14 @@ public class RentalService {
                     .picture(rental.getPicture())
                     .description(rental.getDescription())
                     .owner_id(rental.getOwner().getId())
-                    .created_at(rental.getCreatedAt())
-                    .updated_at(rental.getUpdatedAt())
+                    .created_at(DateUtils.format(rental.getCreatedAt()))
+                    .updated_at(DateUtils.format(rental.getUpdatedAt()))
                     .build();
             response.add(rentalResponse);
         });
-        return response;
+        return RentalsResponse.builder()
+                .rentals(response)
+                .build();
     }
 
     public Optional<Rental> getRentalById(Long id) {
@@ -58,11 +67,12 @@ public class RentalService {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7);
             var user = userRepository.findByEmail(jwtService.extractUsername(token)).orElseThrow();
+            String imagePath = storeImage(formData.getPicture());
             var rental = Rental.builder()
                     .name(formData.getName())
                     .surface(formData.getSurface())
                     .price(formData.getPrice())
-                    .picture(formData.getPicture())
+                    .picture(imagePath)
                     .owner(user)
                     .description(formData.getDescription())
                     .createdAt(LocalDateTime.now())
@@ -72,7 +82,20 @@ public class RentalService {
             return true;
         }
         return false;
+    }
 
+    private String storeImage(MultipartFile imageFile) {
+        try {
+            Path root = Paths.get(UPLOAD_DIR);
+            if (!Files.exists(root)) {
+                Files.createDirectory(root);
+            }
+            Path resolve = root.resolve(imageFile.getOriginalFilename());
+            imageFile.transferTo(resolve);
+            return resolve.toString();
+        } catch (Exception e) {
+            throw new RuntimeException("Could not store the image. Error: " + e.getMessage());
+        }
     }
 
 }

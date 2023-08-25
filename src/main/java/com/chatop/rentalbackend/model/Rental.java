@@ -36,7 +36,7 @@ public class Rental {
     @Column(precision = 19, scale = 2)
     private BigDecimal price;
 
-    @Column(length = 255)
+    @Column(length = 255, nullable = false)
     private String picture;
 
     @Column(length = 2000)
