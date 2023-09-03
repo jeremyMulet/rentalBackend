@@ -2,6 +2,7 @@ package com.chatop.rentalbackend.controller;
 
 import com.chatop.rentalbackend.model.Rental;
 import com.chatop.rentalbackend.request.FormDataRental;
+import com.chatop.rentalbackend.request.MessageResponse;
 import com.chatop.rentalbackend.request.RentalResponse;
 import com.chatop.rentalbackend.request.RentalsResponse;
 import com.chatop.rentalbackend.service.RentalService;
@@ -45,17 +46,17 @@ public class RentalController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createRental(HttpServletRequest request, FormDataRental formData) {
+    public ResponseEntity<MessageResponse> createRental(HttpServletRequest request, FormDataRental formData) {
         if(rentalService.createRental(request, formData)) {
-            return ResponseEntity.ok("Rental created!");
+            return ResponseEntity.ok(MessageResponse.builder().message("Rental created!").build());
         } else {
-            return ResponseEntity.ok("Cannot create rental...");
+            return ResponseEntity.ok(MessageResponse.builder().message("Cannot create rental...").build());
         }
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateRental(@PathVariable Long id, FormDataRental updatedRental) {
+    public ResponseEntity<MessageResponse> updateRental(@PathVariable Long id, FormDataRental updatedRental) {
         return rentalService.getRentalById(id)
                 .map(rental -> {
                     if (updatedRental.getName() != null) {
@@ -71,7 +72,7 @@ public class RentalController {
                         rental.setDescription(updatedRental.getDescription());
                     }
                     rentalService.saveRental(rental);
-                    return ResponseEntity.ok("Rental Updated!");
+                    return ResponseEntity.ok(MessageResponse.builder().message("Rental Updated!").build());
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build()); // renvoie un statut 404 Not Found si le rental n'est pas trouvé
     }

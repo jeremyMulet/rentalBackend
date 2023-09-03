@@ -1,6 +1,7 @@
 package com.chatop.rentalbackend.controller;
 
 import com.chatop.rentalbackend.request.MessageRequest;
+import com.chatop.rentalbackend.request.MessageResponse;
 import com.chatop.rentalbackend.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,8 @@ public class MessageController {
     private final MessageService messageService;
 
     @PostMapping
-    public ResponseEntity<String> createMessage(@RequestBody MessageRequest request) {
+    public ResponseEntity<MessageResponse> createMessage(@RequestBody MessageRequest request) {
         messageService.createMessage(request);
-        return ResponseEntity.ok("Message send with success");
+        return ResponseEntity.ok(MessageResponse.builder().message("Message send with success").build());
     }
 }

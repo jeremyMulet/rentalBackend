@@ -87,7 +87,7 @@ public class RentalService {
                     .name(formData.getName())
                     .surface(formData.getSurface())
                     .price(formData.getPrice())
-                    .picture(imagePath)
+                    .picture("http://localhost:8080/api/pictures/"+formData.getPicture().getOriginalFilename())
                     .owner(user)
                     .description(formData.getDescription())
                     .createdAt(LocalDateTime.now())
