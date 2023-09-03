@@ -23,13 +23,4 @@ public class DateUtils {
         return dateTime.format(customFormatter);
     }
 
-    public static LocalDateTime parse(String dateString) {
-        return LocalDateTime.parse(dateString, getDefaultFormatter());
-    }
-
-    public static LocalDateTime parse(String dateString, String pattern) {
-        DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern(pattern);
-        return LocalDateTime.parse(dateString, customFormatter);
-    }
-
 }
