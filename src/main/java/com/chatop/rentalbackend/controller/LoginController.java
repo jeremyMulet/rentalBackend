@@ -28,7 +28,9 @@ public class LoginController {
 
     @Operation(summary = "Register a new user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully registered user"),
+            @ApiResponse(responseCode = "200", description = "Successfully registered user", content = {
+                    @Content(mediaType = "application/json")
+            }),
             @ApiResponse(responseCode = "400", description = "Invalid Request", content = @Content),
     })
     @PostMapping("/register")
@@ -38,7 +40,9 @@ public class LoginController {
 
     @Operation(summary = "Authenticate a user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully authenticated"),
+            @ApiResponse(responseCode = "200", description = "Successfully authenticated", content = {
+                    @Content(mediaType = "application/json")
+            }),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
     })
     @PostMapping("/login")
@@ -48,7 +52,9 @@ public class LoginController {
 
     @Operation(summary = "Retrieve current authenticated user's details")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved user details"),
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved user details", content = {
+                    @Content(mediaType = "application/json")
+            }),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
     })
 

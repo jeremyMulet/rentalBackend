@@ -26,7 +26,9 @@ public class UserController {
 
     @Operation(summary = "Retrieve a user by its ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User fetched successfully"),
+            @ApiResponse(responseCode = "200", description = "User fetched successfully", content = {
+                    @Content(mediaType = "application/json")
+            }),
             @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing token", content = @Content),
     })
     @GetMapping("/{id}")

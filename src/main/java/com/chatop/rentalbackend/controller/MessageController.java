@@ -26,7 +26,9 @@ public class MessageController {
 
     @Operation(summary = "Create a new message")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Message sent successfully"),
+            @ApiResponse(responseCode = "200", description = "Message sent successfully", content = {
+                    @Content(mediaType = "application/json")
+            }),
             @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing token", content = @Content),
     })
     @PostMapping

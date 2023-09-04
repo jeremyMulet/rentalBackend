@@ -29,7 +29,9 @@ public class RentalController {
 
     @Operation(summary = "Retrieve all rentals")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Rentals fetched successfully"),
+            @ApiResponse(responseCode = "200", description = "Rentals fetched successfully", content = {
+                    @Content(mediaType = "application/json")
+            }),
             @ApiResponse(responseCode = "403", description = "Forbidden - Access denied", content = @Content),
     })
     @GetMapping
@@ -39,7 +41,9 @@ public class RentalController {
 
     @Operation(summary = "Retrieve a rental by its ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Rental fetched successfully"),
+            @ApiResponse(responseCode = "200", description = "Rental fetched successfully", content = {
+                    @Content(mediaType = "application/json")
+            }),
             @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing token", content = @Content),
     })
     @GetMapping("/{id}")
@@ -61,7 +65,9 @@ public class RentalController {
 
     @Operation(summary = "Create a new rental")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Rental created successfully"),
+            @ApiResponse(responseCode = "200", description = "Rental created successfully", content = {
+                    @Content(mediaType = "application/json")
+            }),
             @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing token", content = @Content),
     })
     @PostMapping
@@ -76,7 +82,9 @@ public class RentalController {
 
     @Operation(summary = "Update an existing rental by its ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Rental updated successfully"),
+            @ApiResponse(responseCode = "200", description = "Rental updated successfully", content = {
+                    @Content(mediaType = "application/json")
+            }),
             @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing token", content = @Content),
     })
     @PutMapping("/{id}")
