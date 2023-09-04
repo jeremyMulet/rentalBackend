@@ -7,6 +7,10 @@ import com.chatop.rentalbackend.request.RentalResponse;
 import com.chatop.rentalbackend.request.RentalsResponse;
 import com.chatop.rentalbackend.service.RentalService;
 import com.chatop.rentalbackend.utils.DateUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +27,21 @@ public class RentalController {
 
     private final RentalService rentalService;
 
+    @Operation(summary = "Retrieve all rentals")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Rentals fetched successfully"),
+            @ApiResponse(responseCode = "403", description = "Forbidden - Access denied", content = @Content),
+    })
     @GetMapping
     public ResponseEntity<RentalsResponse> getAllRentals() {
         return ResponseEntity.ok(rentalService.getAllRentals());
     }
 
+    @Operation(summary = "Retrieve a rental by its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Rental fetched successfully"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing token", content = @Content),
+    })
     @GetMapping("/{id}")
     public ResponseEntity<RentalResponse> getRental(@PathVariable Long id) {
         Rental rental = rentalService.getRentalById(id).orElseThrow();
@@ -45,6 +59,11 @@ public class RentalController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Create a new rental")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Rental created successfully"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing token", content = @Content),
+    })
     @PostMapping
     public ResponseEntity<MessageResponse> createRental(HttpServletRequest request, FormDataRental formData) {
         if(rentalService.createRental(request, formData)) {
@@ -55,6 +74,11 @@ public class RentalController {
 
     }
 
+    @Operation(summary = "Update an existing rental by its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Rental updated successfully"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing token", content = @Content),
+    })
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponse> updateRental(@PathVariable Long id, FormDataRental updatedRental) {
         return rentalService.getRentalById(id)
@@ -74,7 +98,7 @@ public class RentalController {
                     rentalService.saveRental(rental);
                     return ResponseEntity.ok(MessageResponse.builder().message("Rental Updated!").build());
                 })
-                .orElseGet(() -> ResponseEntity.notFound().build()); // renvoie un statut 404 Not Found si le rental n'est pas trouvé
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }

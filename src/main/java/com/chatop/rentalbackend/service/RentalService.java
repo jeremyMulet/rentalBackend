@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -82,7 +83,7 @@ public class RentalService {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7);
             var user = userRepository.findByEmail(jwtService.extractUsername(token)).orElseThrow();
-            String imagePath = storeImage(formData.getPicture());
+            storeImage(formData.getPicture());
             var rental = Rental.builder()
                     .name(formData.getName())
                     .surface(formData.getSurface())
@@ -103,17 +104,15 @@ public class RentalService {
      * Store an image and return its path.
      *
      * @param imageFile the image to be stored.
-     * @return the path where the image is stored.
      */
-    private String storeImage(MultipartFile imageFile) {
+    private void storeImage(MultipartFile imageFile) {
         try {
             Path root = Paths.get(UPLOAD_DIR);
             if (!Files.exists(root)) {
                 Files.createDirectory(root);
             }
-            Path resolve = root.resolve(imageFile.getOriginalFilename());
+            Path resolve = root.resolve(Objects.requireNonNull(imageFile.getOriginalFilename()));
             imageFile.transferTo(resolve);
-            return resolve.toString();
         } catch (Exception e) {
             throw new RuntimeException("Could not store the image. Error: " + e.getMessage());
         }

@@ -1,6 +1,10 @@
 package com.chatop.rentalbackend.controller;
 
 import com.chatop.rentalbackend.request.PictureResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -21,22 +25,16 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class PictureController {
 
-//    @GetMapping("/{fileName}")
-//    public ResponseEntity<PictureResponse> getPicture(@PathVariable String fileName) {
-//        return ResponseEntity.ok(PictureResponse.builder()
-//                .picture()
-//                .build());
-//    }
-
+    @Operation(summary = "Retrieve a picture by its filename")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Picture fetched successfully")
+    })
     @GetMapping("/{fileName:.+}")
     public ResponseEntity<Resource> getPicture(@PathVariable String fileName) throws IOException {
         Resource imgFile = new ClassPathResource("pictures/" + fileName);
-
-        // Determine the content type of the image
         String contentType = determineContentType(fileName);
 
         if (contentType == null) {
-            // Handle the case where the file type is unsupported
             return ResponseEntity.badRequest().build();
         }
 
@@ -51,8 +49,7 @@ public class PictureController {
         } else if (fileName.endsWith(".png")) {
             return "image/png";
         }
-        // Add more image types if needed
 
-        return null;  // or throw an exception if you prefer
+        return null;
     }
 }
