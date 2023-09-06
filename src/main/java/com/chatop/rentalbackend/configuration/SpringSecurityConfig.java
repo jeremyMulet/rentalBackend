@@ -1,5 +1,6 @@
 package com.chatop.rentalbackend.configuration;
 
+import com.chatop.rentalbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SpringSecurityConfig {
 
+    private final UserService userService;
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
@@ -48,13 +50,14 @@ public class SpringSecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/src/main/resources/**", "/pictures/**").permitAll()
+                        .requestMatchers("/src/main/resources/**", "/pictures/**", "/resources/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/api/auth/**", "/api/rentals/**", "/api/messages/**", "/api/user/**", "/api/pictures/**").permitAll()
+                        .requestMatchers("/api/auth/**","/api/pictures/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sessManage -> sessManage.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
+                .userDetailsService(userService)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

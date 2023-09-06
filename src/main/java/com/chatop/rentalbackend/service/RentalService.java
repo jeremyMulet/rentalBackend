@@ -9,6 +9,7 @@ import com.chatop.rentalbackend.request.RentalsResponse;
 import com.chatop.rentalbackend.utils.DateUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +31,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RentalService {
 
-    private static final String UPLOAD_DIR = "src/main/resources/pictures/";
+    @Value("${pictures.storage.location}")
+    private String UPLOAD_DIR;
 
     private final RentalRepository rentalRepository;
     private final UserRepository userRepository;

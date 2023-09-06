@@ -1,12 +1,11 @@
 package com.chatop.rentalbackend.controller;
 
-import com.chatop.rentalbackend.request.PictureResponse;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +24,20 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class PictureController {
 
+    @Value("${pictures.storage.location}")
+    private String picturesStorageLocation;
+
     @Operation(summary = "Retrieve a picture by its filename")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Picture fetched successfully")
     })
     @GetMapping("/{fileName:.+}")
     public ResponseEntity<Resource> getPicture(@PathVariable String fileName) throws IOException {
-        Resource imgFile = new ClassPathResource("pictures/" + fileName);
+        Resource imgFile = new FileSystemResource(picturesStorageLocation + fileName);
+
+        if (!imgFile.exists()) {
+            return ResponseEntity.notFound().build();
+        }
         String contentType = determineContentType(fileName);
 
         if (contentType == null) {

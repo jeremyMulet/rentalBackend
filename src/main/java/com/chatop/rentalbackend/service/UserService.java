@@ -6,6 +6,9 @@ import com.chatop.rentalbackend.repository.UserRepository;
 import com.chatop.rentalbackend.request.UserResponse;
 import com.chatop.rentalbackend.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,7 +21,7 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService  implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -38,6 +41,19 @@ public class UserService {
                 .id(id)
                 .created_at(DateUtils.format(user.getCreatedAt()))
                 .updated_at(DateUtils.format(user.getUpdatedAt()))
+                .build();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + username));
+        return  User.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .name(user.getName())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
                 .build();
     }
 }

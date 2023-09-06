@@ -43,7 +43,7 @@ Rental Backend offre une API robuste et flexible pour gérer différents aspects
     ```bash
     cd rentalBackend
     ```
-   Puis construisez-le :
+   Puis buildez-le :
     ```bash
     gradle clean build
     ```
