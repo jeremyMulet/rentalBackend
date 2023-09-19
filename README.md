@@ -1,93 +1,93 @@
 # Rental Backend
 
-Rental Backend est un service RESTful construit avec Spring Boot, destiné à gérer et fournir des informations sur des locations.
+Rental Backend is a RESTful service built with Spring Boot, designed to manage and provide information about rentals.
 
-## Table des matières
+## Table of Contents
 - [Introduction](#introduction)
-- [Fonctionnalités](#fonctionnalités)
-- [Technologies utilisées](#technologies-utilisées)
-- [Installation et utilisation](#installation-et-utilisation)
-- [Documentation API avec Swagger](#documentation-api-avec-swagger)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation and Usage](#installation-and-usage)
+- [API Documentation with Swagger](#api-documentation-with-swagger)
 
 ## Introduction
-Rental Backend offre une API robuste et flexible pour gérer différents aspects des locations. Que vous souhaitiez obtenir des informations sur une location spécifique ou ajouter une nouvelle location à la base de données, Rental Backend est là pour vous.
+Rental Backend offers a robust and flexible API to manage various aspects of rentals. Whether you wish to fetch information about a specific rental or add a new rental to the database, Rental Backend has got you covered.
 
-## Fonctionnalités
-- CRUD complet pour les locations.
-- *(Ajoutez d'autres fonctionnalités spécifiques si nécessaire)*
+## Features
+- Full CRUD for rentals.
 
-## Technologies utilisées
-- **Spring Boot**: Facilitant la création d'applications basées sur Spring.
-- **Spring Data JPA**: Pour simplifier la mise en place des couches de persistance des données.
-- **Springfox Swagger**: Offrant une documentation interactive de l'API.
-- **Spring Security**: Garantissant la sécurité de l'application et l'authentification des utilisateurs.
-- **MySQL**: Base de données utilisée pour stocker les informations.
+## Technologies Used
+- **Spring Boot**: Eases the creation of Spring-based applications.
+- **Spring Data JPA**: Simplifies the setup of data persistence layers.
+- **Springfox Swagger**: Provides interactive API documentation.
+- **Spring Security**: Ensures the security of the application and user authentication.
+- **MySQL**: The database used to store information.
 
-## Installation et utilisation
+## Installation and Usage
 
-### Prérequis
+### Prerequisites
 
-- Java 11 ou version ultérieure
+- Java 11 or later
 - Gradle
 - MySQL
 
-### Étapes d'installation
+### Installation Steps
 
-1. **Clonage du dépôt**
+1. **Clone the Repository**
     ```bash
     git clone https://github.com/jeremyMulet/rentalBackend
     ```
 
-2. **Construction du projet**  
-   Accédez au répertoire du projet :
+2. **Build the Project**  
+   Navigate to the project directory:
     ```bash
     cd rentalBackend
     ```
-   Puis buildez-le :
+   Then build it:
     ```bash
     gradle clean build
     ```
 
-3. **Configuration de la base de données**  
-   Configurez votre base de données MySQL et mettez à jour le fichier `application.properties` avec vos informations de connexion.
+3. **Configure the Database**  
+   Set up your MySQL database and update the `application.properties` file with your connection details.
 
-4. **Démarrage de l'application**  
-   Vous pouvez démarrer l'application de l'une des manières suivantes :
-    - En utilisant Gradle :
+4. **Start the Application**  
+   You can start the application in one of the following ways:
+    - Using Gradle:
         ```bash
         ./gradlew bootRun
+        ```
 
-5. **Accès à l'API**  
-   Une fois l'application démarrée, elle devrait être accessible à l'adresse suivante :  
+5. **Access the API**  
+   Once the application starts, it should be accessible at the following address:  
    `http://localhost:8080/`
 
-## Mise en place de la base de données
+## Setting up the Database
 
-Pour initialiser la base de données, suivez les étapes ci-dessous :
+To initialize the database, follow the steps below:
 
-### Exécution du script SQL
+### Execute the SQL Script
 
-1. **Localisation du script SQL**  
-   Le script d'initialisation `script.sql` est situé dans le package `ressources` du projet.
+1. **Locate the SQL Script**  
+   The initialization script `script.sql` is located in the project's `resources` package.
 
-2. **Utilisation de la ligne de commande**  
-   Si vous préférez utiliser la ligne de commande, vous pouvez le faire comme suit :
+2. **Use Command Line**  
+   If you prefer using the command line, you can do so as follows:
 
     ```bash
     mysql -u [username] -p rental_db < path_to_your_project/resources/script.sql
     ```
-    - Remplacez `[username]` par votre nom d'utilisateur MySQL.
-    - Assurez-vous que le chemin (`path_to_your_project`) pointe vers le répertoire principal de votre projet.
+    - Replace `[username]` with your MySQL username.
+    - Make sure the path (`path_to_your_project`) points to the main directory of your project.
 
-3. **Utilisation d'un outil GUI**  
-   Si vous utilisez un outil comme MySQL Workbench :
-    - Ouvrez le fichier `script.sql` directement depuis l'outil.
-    - Exécutez le script pour initialiser les tables et les relations.
+3. **Use a GUI Tool**  
+   If you're using a tool like MySQL Workbench:
+    - Open the `script.sql` file directly from the tool.
+    - Execute the script to initialize tables and relationships.
 
-### Vérification
+### Verification
 
-Après avoir exécuté le script, assurez-vous que toutes les tables ont été correctement créées et que les relations sont bien en place.
+After executing the script, ensure that all tables are properly created and relationships are in place.
 
-## Documentation API avec Swagger
+## API Documentation with Swagger
 
-Après avoir démarré l'application, la documentation interactive Swagger est disponible à : `http://localhost:8080/swagger-ui/`.
+After starting the application, the interactive Swagger documentation is available at: `http://localhost:8080/swagger-ui/`.
